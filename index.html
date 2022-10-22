@@ -1,14 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="./index.css">
-</head>
-<body>
-  已修改
-</body>
-<script src="./index.js"></script>
-</html>
+git help config  命令不需要联网也可以再浏览器中打开帮助手册
+不想要查看完整的手册可以用-h选项获取更简明的 help输出  git config -h
+
+git status命令查看文件处于什么状态
+精简的写法 是git status -s s代表short的简写  这个时候没有跟踪的前面有红色的?
+
+
+使用命令  git add开始跟踪一个文件 所以要跟踪 index.html文件  运行以下代码 git add index.html     2.还可以把已跟踪、且已修改的文件放到暂存区   3.把有冲突的文件标记为已解决状态   绿色代表已经到暂存区了    git add . 将里面项目全部进行跟踪
+
+现在暂存区中有一个index.html文件等待被 提交到 git仓库中进行保存  可以执行git  commit命令进行提交 其中 -m选项后面是本次的提交消息 用来对提交的内容做进一步的描述
+git commit -m "新建了index.html文件"
+再次运行 git commit -m "提交信息"命令 就可以把暂存区中记录的index.html的快照提交到Git仓库中进行保存
+
+撤销对文件的修改
+把工作区中对应的文件的修改  还原成git仓库中所保存的版本  所有的修改会丢失  且无法恢复  危险性比较高
+git checkout -- 文件名  就可以撤销了
+
+
+如果需要从暂存区中移除相对应的文件  可以使用  gitreset HEAD  要移除的文件名称  .代表所有
+
+如果要跳过 暂存区直接提交到git仓库保存  就需要用到命令  git commit -a -m"描述消息"
+
+
+从 Git 仓库和工作区中同时移除 index.js文件 
+git rm -f index.js
+# 只从 Git仓库中移除  index.css 但保留工作区中的 index.css文件
+git rm --cached index.css
+
+
+.gitignore 文件距离
+
+#是注释
+
+*.a   忽略所有的  .a文件
+
+!lib.a 但是跟踪所有的lib.a即使你在前面忽略了 .a文件
+/TODO  只忽略当前目录下的 TODO文件 而不忽略 subdir/TODO
+build/  葫芦任何目录下名为 build的文件
+doc/*.txt  葫芦 doc/notes.txt  但是不忽略 doc/server/auch.txt 
+
+doc/**/*.pdf  葫芦 doc/目录及其所有子目录下的  .pdf文件
+
+
+要回顾项目的提交历史  可以使用  git log这个简单且有效的命令
+只展示最新的两条是  git log -2
+
+在一行上展示最近两条提交的历史信息
+git log -2 --pretty=online
+
+#在一行上展示最近两条提交历史的信息  并自定义输出的格式
+# %h调教的是简写hash地址  %an 作者名字  %ar作者修订日期  按多久以前的方式显示  %s提交说明
+git log -2 --oretty=format:"%h | %an | %ar | %s"
+
+
+使用git reset --hard命令  根据指定的提交ID回退到指定版本
+git reset --hard<CommitID>
+
+  在旧版本中使用 git reflog --pretty=oneline 命令 查看命令操作的历史 
+  git reflog --pretty=oneline
+
+  再次根据最新的 提交 ID 跳转到 最新的版本
+  git reset --hard<CommitID>
+
+
+
+第二次给远程仓库提交代码 就可以使用 git push就能提交成功了
+
+配置ssh
+先输入 ssh-keygen -t rsa -b 4096 -C"2357216471@qq.com"
+
+ssh -T git@github.com  检查是否配置成功
+
+
+克隆仓库的文件
+git clone  选择地址  有ssh 和https
+
+创建分支 和查看分支 都是  git branch  后面跟了分支的名称就是创建  没跟就是查看
+git checkout是 切换分支
+
+git checkout -b 加文件名 就是创建同时切换的命令
+
+
+在main分支上 运行git merge命令 可以把login分支里面的代码合并
+git merge login
+
+如果两个分支修改了同一个文件 产生了冲突 git没有办法干净的合并他们 完美就需要打开这些冲突的文件然后手动处理
+在解决完冲突之后   在执行
+git add .          ||   git commit -m"解决了分支合并冲突的问题"
+
+
+
+将本地分支推送到远程仓库需要运行如下命令
+第一次 是  git push -u orgin 本地分支名称:远地分支名称
+
+实际案例
+git push -u origin res:pay
+
+如果希望远程分支名称和本地名称保持一致 可以对命令进行简化
+git push -u origin payment
+
+
+运行如下的命令 可以查看远程仓库里 所有的分支列表的信息
+git remote show 远程仓库名称
+
+
+从远程仓库中 把对应的远程分支下载到本地仓库  保持本地分支和远程分支名称相同
+git checkout 远程分支的名称
+
+git checkout pay 
+
+
+#从远处仓库中  把对应的远程分支下载到本地仓库  并把本地分支进行重命名方法
+git checkout -b 本地分支的名称   远程仓库名称/ 远程分支名称 
+示例
+git checkout -b payment origin/pay
+
+
+删除远程
+git push 远程仓库名称 --delete 远程分支名称 
+# 示例
+git push origin --delete pay
