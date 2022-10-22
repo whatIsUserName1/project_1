@@ -78,3 +78,15 @@ git clone  选择地址  有ssh 和https
 git checkout是 切换分支
 
 git checkout -b 加文件名 就是创建同时切换的命令
+
+
+在main分支上 运行git merge命令 可以把login分支里面的代码合并
+git merge login
+
+如果两个分支修改了同一个文件 产生了冲突 git没有办法干净的合并他们 完美就需要打开这些冲突的文件然后手动处理
+在解决完冲突之后   在执行
+git add .          ||   git commit -m"解决了分支合并冲突的问题"
+
+
+
+将本地分支推送到远程仓库需要运行如下命令
