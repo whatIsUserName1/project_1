@@ -19,3 +19,62 @@ git checkout -- 文件名  就可以撤销了
 如果需要从暂存区中移除相对应的文件  可以使用  gitreset HEAD  要移除的文件名称  .代表所有
 
 如果要跳过 暂存区直接提交到git仓库保存  就需要用到命令  git commit -a -m"描述消息"
+
+
+从 Git 仓库和工作区中同时移除 index.js文件 
+git rm -f index.js
+# 只从 Git仓库中移除  index.css 但保留工作区中的 index.css文件
+git rm --cached index.css
+
+
+.gitignore 文件距离
+
+#是注释
+
+*.a   忽略所有的  .a文件
+
+!lib.a 但是跟踪所有的lib.a即使你在前面忽略了 .a文件
+/TODO  只忽略当前目录下的 TODO文件 而不忽略 subdir/TODO
+build/  葫芦任何目录下名为 build的文件
+doc/*.txt  葫芦 doc/notes.txt  但是不忽略 doc/server/auch.txt 
+
+doc/**/*.pdf  葫芦 doc/目录及其所有子目录下的  .pdf文件
+
+
+要回顾项目的提交历史  可以使用  git log这个简单且有效的命令
+只展示最新的两条是  git log -2
+
+在一行上展示最近两条提交的历史信息
+git log -2 --pretty=online
+
+#在一行上展示最近两条提交历史的信息  并自定义输出的格式
+# %h调教的是简写hash地址  %an 作者名字  %ar作者修订日期  按多久以前的方式显示  %s提交说明
+git log -2 --oretty=format:"%h | %an | %ar | %s"
+
+
+使用git reset --hard命令  根据指定的提交ID回退到指定版本
+git reset --hard<CommitID>
+
+  在旧版本中使用 git reflog --pretty=oneline 命令 查看命令操作的历史 
+  git reflog --pretty=oneline
+
+  再次根据最新的 提交 ID 跳转到 最新的版本
+  git reset --hard<CommitID>
+
+
+
+第二次给远程仓库提交代码 就可以使用 git push就能提交成功了
+
+配置ssh
+先输入 ssh-keygen -t rsa -b 4096 -C"2357216471@qq.com"
+
+ssh -T git@github.com  检查是否配置成功
+
+
+克隆仓库的文件
+git clone  选择地址  有ssh 和https
+
+创建分支 和查看分支 都是  git branch  后面跟了分支的名称就是创建  没跟就是查看
+git checkout是 切换分支
+
+git checkout -b 加文件名 就是创建同时切换的命令
