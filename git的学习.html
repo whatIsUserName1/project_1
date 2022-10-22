@@ -90,3 +90,26 @@ git add .          ||   git commit -m"解决了分支合并冲突的问题"
 
 
 将本地分支推送到远程仓库需要运行如下命令
+第一次 是  git push -u orgin 本地分支名称:远地分支名称
+
+实际案例
+git push -u origin res:pay
+
+如果希望远程分支名称和本地名称保持一致 可以对命令进行简化
+git push -u origin payment
+
+
+运行如下的命令 可以查看远程仓库里 所有的分支列表的信息
+git remote show 远程仓库名称
+
+
+从远程仓库中 把对应的远程分支下载到本地仓库  保持本地分支和远程分支名称相同
+git checkout 远程分支的名称
+
+git checkout pay 
+
+
+#从远处仓库中  把对应的远程分支下载到本地仓库  并把本地分支进行重命名方法
+git checkout -b 本地分支的名称   远程仓库名称/ 远程分支名称 
+示例
+git checkout -b payment origin/pay
